@@ -1,0 +1,4 @@
+interface:
+  display_name: "信·达·雅翻译"
+  short_description: "忠实、自然、得体的中文翻译与审校，保留术语、结构及关键事实"
+  default_prompt: "使用 $xindaya-translator 将以下内容译成简体中文，保留原意、文体和结构。"

@@ -1,0 +1,22 @@
+name: Improvement / 改进建议
+description: Propose a focused improvement supported by a real use case.
+title: "[Enhancement] "
+body:
+  - type: textarea
+    id: use_case
+    attributes:
+      label: Use case and current limitation / 场景与现有不足
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior / 建议行为
+      description: Describe the desired outcome and provide a small example.
+    validations:
+      required: true
+  - type: textarea
+    id: tradeoffs
+    attributes:
+      label: Alternatives and tradeoffs / 替代方案与影响
+      description: Consider additional instructions, false positives, compatibility, and maintenance.

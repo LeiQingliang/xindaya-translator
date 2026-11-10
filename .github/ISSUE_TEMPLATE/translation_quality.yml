@@ -1,0 +1,42 @@
+name: Translation quality / 翻译质量
+description: Share a source-grounded failure observed with this Skill.
+title: "[Translation] "
+body:
+  - type: markdown
+    attributes:
+      value: "Share only text you have permission to publish. Reference translations are suggestions, not the only acceptable wording."
+  - type: textarea
+    id: environment
+    attributes:
+      label: Evaluation environment / 评测环境
+      description: Skill version or commit, host, model, date, and whether Skill activation was confirmed.
+    validations:
+      required: true
+  - type: textarea
+    id: instructions
+    attributes:
+      label: User request / 用户要求
+      description: Include target language, output mode, glossary, and relevant context.
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Source text / 原文
+      description: Supply a minimal, anonymized example with enough context to resolve its meaning.
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Actual translation / 实际译文
+      description: Paste the actual model output, not a reconstructed example.
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Issue and proposed correction / 问题及建议
+      description: Explain the changed meaning, missing information, broken structure, or style mismatch. Suggest a correction if possible.
+    validations:
+      required: true

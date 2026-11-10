@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    name: Python ${{ matrix.python }} / ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ['3.10', '3.14']
+        include:
+          - os: ubuntu-latest
+            python: '3.11'
+          - os: ubuntu-latest
+            python: '3.12'
+          - os: ubuntu-latest
+            python: '3.13'
+    env:
+      PYTHONUTF8: '1'
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Validate Skill and repository fixtures
+        run: python scripts/validate_skill.py .
+      - name: Run offline regression tests
+        run: python -m unittest discover -s tests -v
+      - name: Check Markdown translation example
+        run: python scripts/check_translation.py examples/technical.en.md examples/technical.zh-CN.md
+      - name: Check JSON translation example
+        run: python scripts/check_translation.py examples/ui.en.json examples/ui.zh-CN.json --format json
+      - name: Build portable Skill archive
+        run: python scripts/package_skill.py --output dist
+      - name: Retain portable package
+        if: matrix.os == 'ubuntu-latest' && matrix.python == '3.14'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: xindaya-translator
+          path: dist/*
+          if-no-files-found: error
+          retention-days: 14

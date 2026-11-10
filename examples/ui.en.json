@@ -1,0 +1,9 @@
+{
+  "welcome": "Welcome, {name}!",
+  "retry": "Try again in {seconds} seconds.",
+  "help_url": "https://example.com/help",
+  "limit": 3,
+  "enabled": true,
+  "items": ["Open", "Close"],
+  "error": null
+}
